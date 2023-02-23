@@ -7,29 +7,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/jetstack/spiffe-connector/internal/pkg/cryptoutil"
+	"github.com/charlieegan3/spiffegen/pkg/cryptoutil"
 )
-
-const testConfig = `---
-acls:
-- match_principal: "spiffe://foo/bar/baz"
-  credentials:
-  - provider: "google"
-    object_reference: "service-account@example.com"
-  - provider: "aws"
-    object_reference: "aws::arn:foo"
-spiffe:
-  svid_sources:
-    files:
-      trust_domain_ca: ./ca.pem
-      svid_cert: ./svid_1_cert.pem
-      svid_key: ./svid_1_key.pem
-`
 
 // Generate testing material for use locally.
 func main() {
 	if len(os.Args) < 2 {
-		exitOnErr(errors.New("usage: " + os.Args[0] + " 'spiffe://your.domain/your/id' [...]"))
+		exitOnErr(errors.New("usage: " + os.Args[0] + " 'spiffe://example.com/your/id' [...]"))
 	}
 
 	certs, err := cryptoutil.GenerateTestCerts(os.Args[1:len(os.Args)]...)
@@ -56,9 +40,6 @@ func main() {
 		exitOnErr(os.WriteFile(fmt.Sprintf("svid_%d_cert.pem", i+1), leafCert, 0o600))
 		exitOnErr(os.WriteFile(fmt.Sprintf("svid_%d_key.pem", i+1), key, 0o666))
 	}
-
-	// test config will only contain the first SVID
-	exitOnErr(os.WriteFile("test.yaml", []byte(testConfig), 0o666))
 }
 
 func exitOnErr(err error) {

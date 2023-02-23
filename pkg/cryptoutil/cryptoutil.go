@@ -14,6 +14,11 @@ import (
 	"time"
 )
 
+const (
+	org     = "Example Org"
+	orgUnit = "Example Org Unit"
+)
+
 // GenerateTestCerts generates a root for the trust domain and uses it to sign an x509 SVID for each supplied SPIFFEID
 func GenerateTestCerts(spiffeids ...string) ([]tls.Certificate, error) {
 	var tlsCerts []tls.Certificate
@@ -45,8 +50,8 @@ func GenerateTestCerts(spiffeids ...string) ([]tls.Certificate, error) {
 	}
 	caSubj := pkix.Name{
 		Country:            []string{"GB"},
-		Organization:       []string{"Jetstack"},
-		OrganizationalUnit: []string{"Product"},
+		Organization:       []string{org},
+		OrganizationalUnit: []string{orgUnit},
 		SerialNumber:       caSerial.String(),
 	}
 	caTemplate := &x509.Certificate{
@@ -89,8 +94,8 @@ func GenerateTestCerts(spiffeids ...string) ([]tls.Certificate, error) {
 		}
 		leafSubj := pkix.Name{
 			Country:            []string{"GB"},
-			Organization:       []string{"Jetstack"},
-			OrganizationalUnit: []string{"Product"},
+			Organization:       []string{org},
+			OrganizationalUnit: []string{orgUnit},
 			SerialNumber:       leafSerial.String(),
 		}
 		uri, err := url.Parse(spiffeID)

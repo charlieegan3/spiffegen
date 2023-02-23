@@ -1,5 +1,6 @@
-⚠️ **Note** this repo is a demo for Kubecon EU 22 and is not suitable for more than experimentation ⚠️
+# spiffegen
 
-# spiffe-connector
+This is a repo to generate x509 SPIFFE SVIDs and CA certs for testing.
 
-Using SPIFFE Verifiable Identity Documents to seamlessly authenticate to existing services.
+It's almost identical to [@jakexks's](https://github.com/jakexks) work in
+[spiffe-connector](https://github.com/jetstack/spiffe-connector/tree/main/internal/pkg/cryptoutil).
